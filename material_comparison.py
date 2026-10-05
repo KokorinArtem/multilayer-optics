@@ -52,5 +52,5 @@ plt.title("Fresnel Reflection for Different Materials (p-polarization)")
 
 plt.grid()
 plt.legend()
-
+plt.savefig("figures/material_comparison.png", dpi=300, bbox_inches="tight")
 plt.show()

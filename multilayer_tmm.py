@@ -41,5 +41,5 @@ plt.title("Fresnel Reflection: Air → Glass")
 
 plt.grid()
 plt.legend()
-
+plt.savefig("figures/fresnel_reflection.png", dpi=300, bbox_inches="tight")
 plt.show()

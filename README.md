@@ -1,108 +1,221 @@
-# Computational Modeling of Optical Properties of Multilayer Materials
+# Multilayer Optics
 
-## Overview
+Python project for numerical simulation of light reflection from interfaces and multilayer optical structures.
 
-This project investigates the optical properties of dielectric materials and multilayer structures using numerical modeling in Python.
+The project studies Fresnel reflection, polarization effects, total internal reflection, and multilayer thin-film structures using the Transfer Matrix Method (TMM).
 
-The project focuses on Fresnel reflection, polarization, total internal reflection, thin-film interference, and optimization of multilayer optical structures.
+## Project Goals
 
-The main goal is to study how refractive index, wavelength, layer order, number of layers, and layer thickness influence optical reflectance.
+The main goals of this project are:
 
-## Methods
+- Calculate Fresnel reflection coefficients
+- Compare s- and p-polarized light
+- Demonstrate Brewster's angle
+- Study total internal reflection
+- Compare optical materials
+- Model multilayer thin-film structures
+- Study the influence of layer order and number
+- Optimize layer thicknesses for a selected wavelength
 
-The simulations are based on:
+## Physics
 
-- Snell's law
-- Fresnel equations
-- Brewster angle
-- Total internal reflection
-- Transfer Matrix Method (TMM)
-- Numerical parameter optimization
+### Fresnel Reflection
 
-Python libraries used:
+When light reaches an interface between two media, part of the electromagnetic wave is reflected and part is transmitted.
 
-- NumPy
-- Matplotlib
+The reflection depends on:
 
-## Project Structure
+- refractive indices of the materials
+- angle of incidence
+- polarization of light
 
-### 1. Fresnel Reflection
+For s-polarization:
 
-Reflection of s- and p-polarized light at an air-glass interface was modeled using the Fresnel equations.
+\[
+r_s =
+\frac{n_1\cos\theta_1-n_2\cos\theta_2}
+{n_1\cos\theta_1+n_2\cos\theta_2}
+\]
 
-For glass with n = 1.50, the Brewster angle was approximately:
+For p-polarization:
 
-56.31 degrees.
+\[
+r_p =
+\frac{n_2\cos\theta_1-n_1\cos\theta_2}
+{n_2\cos\theta_1+n_1\cos\theta_2}
+\]
 
-### 2. Comparison of Optical Materials
+Reflectance is calculated as:
 
-The optical response of several materials was compared:
+\[
+R = |r|^2
+\]
 
-- Quartz
-- Glass
-- Sapphire
-- Diamond
+### Brewster Angle
 
-The simulations demonstrated that increasing the refractive index increases the Brewster angle and changes the angular dependence of reflectance.
+For p-polarized light, reflection becomes zero at the Brewster angle:
 
-### 3. Total Internal Reflection
+\[
+\theta_B = \arctan\left(\frac{n_2}{n_1}\right)
+\]
 
-Light propagation from glass to air was investigated.
+This effect can be observed in the material comparison simulation.
 
-The calculated critical angle was:
+### Total Internal Reflection
 
-41.81 degrees.
+When light travels from a medium with a higher refractive index to a medium with a lower refractive index, total internal reflection can occur.
 
-Above this angle, the reflectance becomes R = 1, corresponding to total internal reflection.
+The critical angle is:
 
-### 4. Multilayer Optical Structure
+\[
+\theta_c =
+\arcsin\left(\frac{n_2}{n_1}\right)
+\]
 
-A two-layer structure was modeled:
+For glass-air transition, the simulation gives a critical angle of approximately:
+
+**41.81 degrees**
+
+## Transfer Matrix Method
+
+Multilayer optical structures are modeled using the Transfer Matrix Method (TMM).
+
+Each optical layer is represented by a matrix describing the propagation of an electromagnetic wave through the layer.
+
+By multiplying the matrices of individual layers, the optical response of the complete multilayer structure can be calculated.
+
+This makes it possible to study structures such as:
 
 Air → SiO2 → TiO2 → Glass
 
-The Transfer Matrix Method was used to calculate wavelength-dependent reflectance.
+and more complex periodic multilayer systems.
 
-### 5. Influence of Layer Order and Number
+## Results
 
-Different multilayer configurations were compared.
+### Fresnel Reflection
 
-Reflectance at 550 nm:
+The Fresnel simulation demonstrates the dependence of reflectance on the angle of incidence and polarization.
 
-- Bare glass: 4.00%
-- SiO2 / TiO2: 8.18%
-- TiO2 / SiO2: 36.51%
-- (SiO2 / TiO2) × 3: 73.74%
+![Fresnel Reflection](figures/fresnel_reflection.png)
 
-The results demonstrate the strong influence of layer order and the number of layers on optical reflectance.
+### Material Comparison
 
-### 6. Thickness Optimization
+Different materials produce different reflection curves because of their different refractive indices.
 
-A numerical parameter search was performed to maximize reflectance at 550 nm.
+The simulation compares several optical materials and demonstrates the shift of the Brewster angle.
 
-For the SiO2 / TiO2 structure, the search produced:
+![Material Comparison](figures/material_comparison.png)
 
-- Maximum reflectance: 34.43%
-- SiO2 thickness: 188 nm
-- TiO2 thickness: 172 nm
+### Total Internal Reflection
 
-The results were visualized using a two-dimensional reflectance map.
+For light traveling from glass to air, reflectance reaches 1 after the critical angle.
 
-## Conclusions
+![Total Internal Reflection](figures/total_internal_reflection.png)
 
-The simulations demonstrate that the optical properties of multilayer materials can be controlled through material selection, layer order, layer thickness, and the number of layers.
+### Layer Comparison
 
-Increasing the number of dielectric layers can strongly increase reflectance in a selected wavelength range.
+The order and number of dielectric layers strongly influence the optical response of the structure.
 
-Numerical modeling provides a useful method for designing and analyzing multilayer optical structures.
+The simulation compares different SiO2/TiO2 configurations.
 
-## Future Work
+![Layer Comparison](figures/layer_comparison.png)
 
-Possible extensions include:
+### Thickness Optimization
+
+The program scans different SiO2 and TiO2 layer thicknesses and calculates the reflectance at a selected wavelength.
+
+For the current simulation:
+
+- Design wavelength: **550 nm**
+- Maximum calculated reflectance: approximately **34.43%**
+- Optimal SiO2 thickness: approximately **188 nm**
+- Optimal TiO2 thickness: approximately **172 nm**
+
+![Thickness Optimization](figures/thickness_optimization.png)
+
+## Project Structure
+
+```text
+multilayer-optics/
+│
+├── fresnel_reflection.py
+├── material_comparison.py
+├── total_internal_reflection.py
+├── multilayer_tmm.py
+├── layer_comparison.py
+├── thickness_optimization.py
+│
+├── figures/
+│   ├── fresnel_reflection.png
+│   ├── material_comparison.png
+│   ├── total_internal_reflection.png
+│   ├── layer_comparison.png
+│   └── thickness_optimization.png
+│
+├── requirements.txt
+├── README.md
+└── .gitignore
+```
+
+## Scripts
+
+`fresnel_reflection.py`  
+Calculates Fresnel reflection and studies polarization-dependent reflection.
+
+`material_comparison.py`  
+Compares Fresnel reflection for materials with different refractive indices.
+
+`total_internal_reflection.py`  
+Simulates total internal reflection and calculates the critical angle.
+
+`multilayer_tmm.py`  
+Contains the Transfer Matrix Method calculations for multilayer optical structures.
+
+`layer_comparison.py`  
+Studies how layer order and number affect reflectance.
+
+`thickness_optimization.py`  
+Searches for layer thicknesses that maximize reflectance at the selected wavelength.
+
+## Requirements
+
+The project requires:
+
+- Python 3
+- NumPy
+- Matplotlib
+
+Install the dependencies with:
+
+```bash
+pip install -r requirements.txt
+```
+
+## Running the Project
+
+For example:
+
+```bash
+python fresnel_reflection.py
+```
+
+or:
+
+```bash
+python thickness_optimization.py
+```
+
+The programs generate plots showing the calculated optical properties.
+
+## Possible Future Development
+
+The project can be extended by adding:
 
 - wavelength-dependent refractive indices
-- absorption in materials
-- optimization of multilayer structures
-- oblique incidence
-- comparison with experimental data
-- design of dielectric mirrors and anti-reflection coatings
+- absorption and complex refractive indices
+- arbitrary incidence angles for multilayer structures
+- separate s- and p-polarization calculations in TMM
+- transmission spectra
+- distributed Bragg reflector optimization
+- anti-reflection coating design
+- comparison with experimental optical data

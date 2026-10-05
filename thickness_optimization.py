@@ -129,5 +129,5 @@ plt.title(
 )
 
 plt.legend()
-
+plt.savefig("figures/thickness_optimization.png", dpi=300, bbox_inches="tight")
 plt.show()

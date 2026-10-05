@@ -152,5 +152,5 @@ plt.title(
 
 plt.grid()
 plt.legend()
-
+plt.savefig("figures/layer_comparison.png", dpi=300, bbox_inches="tight")
 plt.show()

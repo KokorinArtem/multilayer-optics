@@ -61,5 +61,5 @@ plt.title("Total Internal Reflection: Glass → Air")
 
 plt.grid()
 plt.legend()
-
+plt.savefig("figures/total_internal_reflection.png", dpi=300, bbox_inches="tight")
 plt.show()
