@@ -1,23 +1,23 @@
 # Multilayer Optics
 
-Python project for numerical simulation of light reflection from interfaces and multilayer optical structures.
+Numerical simulation of light reflection from optical interfaces and multilayer dielectric structures using Python and the Transfer Matrix Method (TMM).
 
-The project studies Fresnel reflection, polarization effects, total internal reflection, and multilayer thin-film structures using the Transfer Matrix Method (TMM).
+The project studies Fresnel reflection, polarization effects, total internal reflection, thin-film interference, dielectric Bragg reflectors and optical microcavities.
 
 ## Project Goals
 
 The main goals of this project are:
 
-- Calculate Fresnel reflection coefficients
-- Compare s- and p-polarized light
-- Demonstrate Brewster's angle
-- Study total internal reflection
-- Compare optical materials
-- Model multilayer thin-film structures
-- Study the influence of layer order and number
-- Optimize layer thicknesses for a selected wavelength
+- study Fresnel reflection at dielectric interfaces;
+- investigate s- and p-polarization;
+- calculate the Brewster and critical angles;
+- model multilayer dielectric structures using the Transfer Matrix Method;
+- investigate the influence of material and layer thickness;
+- design a dielectric Bragg reflector;
+- investigate angular and polarization dependence of a Bragg mirror;
+- model a defect mode in an optical microcavity.
 
-## Physics
+## Physical Background
 
 ### Fresnel Reflection
 
@@ -25,118 +25,182 @@ When light reaches an interface between two media, part of the electromagnetic w
 
 The reflection depends on:
 
-- refractive indices of the materials
-- angle of incidence
-- polarization of light
+- refractive indices;
+- angle of incidence;
+- polarization.
 
-For s-polarization:
-
-\[
-r_s =
-\frac{n_1\cos\theta_1-n_2\cos\theta_2}
-{n_1\cos\theta_1+n_2\cos\theta_2}
-\]
-
-For p-polarization:
-
-\[
-r_p =
-\frac{n_2\cos\theta_1-n_1\cos\theta_2}
-{n_2\cos\theta_1+n_1\cos\theta_2}
-\]
-
-Reflectance is calculated as:
+The project calculates the reflectance
 
 \[
 R = |r|^2
 \]
 
-### Brewster Angle
+separately for s- and p-polarized light.
 
-For p-polarized light, reflection becomes zero at the Brewster angle:
+For p-polarization, the reflection becomes zero at the Brewster angle:
 
 \[
-\theta_B = \arctan\left(\frac{n_2}{n_1}\right)
+\tan \theta_B = \frac{n_2}{n_1}.
 \]
-
-This effect can be observed in the material comparison simulation.
 
 ### Total Internal Reflection
 
-When light travels from a medium with a higher refractive index to a medium with a lower refractive index, total internal reflection can occur.
+When light propagates from a medium with a larger refractive index to a medium with a smaller refractive index, total internal reflection can occur.
 
-The critical angle is:
+The critical angle satisfies
 
 \[
-\theta_c =
-\arcsin\left(\frac{n_2}{n_1}\right)
+\sin\theta_c = \frac{n_2}{n_1}.
 \]
 
-For glass-air transition, the simulation gives a critical angle of approximately:
+For angles larger than the critical angle,
 
-**41.81 degrees**
+\[
+R = 1.
+\]
 
-## Transfer Matrix Method
+### Transfer Matrix Method
 
-Multilayer optical structures are modeled using the Transfer Matrix Method (TMM).
+Multilayer structures are calculated using the Transfer Matrix Method.
 
-Each optical layer is represented by a matrix describing the propagation of an electromagnetic wave through the layer.
+Each optical layer is represented by a characteristic matrix
 
-By multiplying the matrices of individual layers, the optical response of the complete multilayer structure can be calculated.
+\[
+M_i =
+\begin{pmatrix}
+\cos\delta_i & \frac{i\sin\delta_i}{\eta_i}\\
+i\eta_i\sin\delta_i & \cos\delta_i
+\end{pmatrix}.
+\]
 
-This makes it possible to study structures such as:
+The phase thickness is
 
-Air → SiO2 → TiO2 → Glass
+\[
+\delta_i =
+\frac{2\pi}{\lambda}
+n_i d_i \cos\theta_i.
+\]
 
-and more complex periodic multilayer systems.
+The matrix of the complete optical structure is obtained by multiplying the matrices of all layers:
 
-## Results
+\[
+M = M_1M_2M_3\dots M_N.
+\]
 
-### Fresnel Reflection
+This makes it possible to calculate the reflection spectrum of complex multilayer structures.
 
-The Fresnel simulation demonstrates the dependence of reflectance on the angle of incidence and polarization.
+## Dielectric Bragg Reflector
 
-![Fresnel Reflection](figures/fresnel_reflection.png)
+A dielectric Bragg reflector was constructed using alternating SiO2 and TiO2 layers:
 
-### Material Comparison
+\[
+(SiO_2/TiO_2)^N.
+\]
 
-Different materials produce different reflection curves because of their different refractive indices.
+The design wavelength was
 
-The simulation compares several optical materials and demonstrates the shift of the Brewster angle.
+\[
+\lambda_0 = 550\text{ nm}.
+\]
 
-![Material Comparison](figures/material_comparison.png)
+Quarter-wave layer thicknesses were used:
 
-### Total Internal Reflection
+\[
+d = \frac{\lambda_0}{4n}.
+\]
 
-For light traveling from glass to air, reflectance reaches 1 after the critical angle.
+For the parameters used in this project:
 
-![Total Internal Reflection](figures/total_internal_reflection.png)
+- SiO2: approximately 94.18 nm
+- TiO2: approximately 57.29 nm
 
-### Layer Comparison
+Increasing the number of layer pairs produces a broad region of high reflectance called the photonic stop band.
 
-The order and number of dielectric layers strongly influence the optical response of the structure.
+![Bragg mirror](figures/bragg_mirror.png)
 
-The simulation compares different SiO2/TiO2 configurations.
+## Angular Dependence
 
-![Layer Comparison](figures/layer_comparison.png)
+The Bragg reflector was also studied at different incidence angles:
 
-### Thickness Optimization
+- 0°
+- 15°
+- 30°
+- 45°
+- 60°
 
-The program scans different SiO2 and TiO2 layer thicknesses and calculates the reflectance at a selected wavelength.
+As the incidence angle increases, the reflection band shifts toward shorter wavelengths.
 
-For the current simulation:
+The behavior is different for s- and p-polarized light.
 
-- Design wavelength: **550 nm**
-- Maximum calculated reflectance: approximately **34.43%**
-- Optimal SiO2 thickness: approximately **188 nm**
-- Optimal TiO2 thickness: approximately **172 nm**
+### s-polarization
 
-![Thickness Optimization](figures/thickness_optimization.png)
+![Angular dependence s](figures/angular_dependence_s.png)
+
+### p-polarization
+
+![Angular dependence p](figures/angular_dependence_p.png)
+
+## Optical Microcavity
+
+A defect layer was inserted between two Bragg reflectors.
+
+The structure has the form
+
+\[
+(SiO_2/TiO_2)^5
+|
+\text{Defect}
+|
+(TiO_2/SiO_2)^5.
+\]
+
+The defect creates a localized optical mode inside the photonic stop band.
+
+A narrow dip in reflectance appears close to the design wavelength of 550 nm.
+
+![Microcavity](figures/microcavity.png)
+
+This demonstrates the formation of a resonant mode inside a multilayer dielectric structure.
+
+## Other Simulations
+
+The project also includes:
+
+### Fresnel reflection
+
+![Fresnel reflection](figures/fresnel_reflection.png)
+
+### Material comparison
+
+![Material comparison](figures/material_comparison.png)
+
+### Total internal reflection
+
+![Total internal reflection](figures/total_internal_reflection.png)
+
+### Layer comparison
+
+![Layer comparison](figures/layer_comparison.png)
+
+### Thickness optimization
+
+![Thickness optimization](figures/thickness_optimization.png)
 
 ## Project Structure
 
 ```text
-multilayer-optics/
+multilayer_optics/
+│
+├── figures/
+│   ├── fresnel_reflection.png
+│   ├── material_comparison.png
+│   ├── total_internal_reflection.png
+│   ├── layer_comparison.png
+│   ├── thickness_optimization.png
+│   ├── bragg_mirror.png
+│   ├── angular_dependence_s.png
+│   ├── angular_dependence_p.png
+│   └── microcavity.png
 │
 ├── fresnel_reflection.py
 ├── material_comparison.py
@@ -144,44 +208,18 @@ multilayer-optics/
 ├── multilayer_tmm.py
 ├── layer_comparison.py
 ├── thickness_optimization.py
-│
-├── figures/
-│   ├── fresnel_reflection.png
-│   ├── material_comparison.png
-│   ├── total_internal_reflection.png
-│   ├── layer_comparison.png
-│   └── thickness_optimization.png
-│
+├── bragg_mirror.py
+├── angular_dependence.py
+├── microcavity.py
 ├── requirements.txt
-├── README.md
-└── .gitignore
+└── README.md
 ```
-
-## Scripts
-
-`fresnel_reflection.py`  
-Calculates Fresnel reflection and studies polarization-dependent reflection.
-
-`material_comparison.py`  
-Compares Fresnel reflection for materials with different refractive indices.
-
-`total_internal_reflection.py`  
-Simulates total internal reflection and calculates the critical angle.
-
-`multilayer_tmm.py`  
-Contains the Transfer Matrix Method calculations for multilayer optical structures.
-
-`layer_comparison.py`  
-Studies how layer order and number affect reflectance.
-
-`thickness_optimization.py`  
-Searches for layer thicknesses that maximize reflectance at the selected wavelength.
 
 ## Requirements
 
-The project requires:
+The project uses:
 
-- Python 3
+- Python
 - NumPy
 - Matplotlib
 
@@ -191,31 +229,35 @@ Install the dependencies with:
 pip install -r requirements.txt
 ```
 
-## Running the Project
+## Main Results
 
-For example:
+The numerical simulations demonstrate that:
 
-```bash
-python fresnel_reflection.py
-```
+1. Fresnel reflection strongly depends on incidence angle and polarization.
+2. p-polarized light has zero reflection at the Brewster angle.
+3. Total internal reflection occurs above the critical angle.
+4. Thin dielectric layers produce interference effects.
+5. Alternating dielectric layers can create a high-reflectance Bragg mirror.
+6. Increasing the number of layer pairs increases the reflectance of the stop band.
+7. The stop band shifts when the angle of incidence changes.
+8. s- and p-polarized waves behave differently at oblique incidence.
+9. A defect inside a Bragg structure creates a narrow resonant mode inside the stop band.
 
-or:
+## Applications
 
-```bash
-python thickness_optimization.py
-```
+The physical principles studied in this project are used in:
 
-The programs generate plots showing the calculated optical properties.
+- dielectric mirrors;
+- optical filters;
+- laser resonators;
+- anti-reflection coatings;
+- photonic crystals;
+- optical sensors;
+- microcavities;
+- wavelength-selective optical devices.
 
-## Possible Future Development
+## Author
 
-The project can be extended by adding:
+Physics student project.
 
-- wavelength-dependent refractive indices
-- absorption and complex refractive indices
-- arbitrary incidence angles for multilayer structures
-- separate s- and p-polarization calculations in TMM
-- transmission spectra
-- distributed Bragg reflector optimization
-- anti-reflection coating design
-- comparison with experimental optical data
+Peter the Great St. Petersburg Polytechnic University (SPbPU).
